@@ -10,7 +10,7 @@ This project focuses on **test automation for web login pages** as part of the C
   <tr>
     <td>✅</td>
     <td>Login App</td>
-    <td><a href="Report.pdf">Link</a></td>
+    <td><a href="https://login-app-seven-zeta.vercel.app/">Link</a></td>
   </tr>
   <tr>
     <td>🛠️</td>
