@@ -14,7 +14,7 @@ This project focuses on **test automation for web login pages** as part of the C
   </tr>
   <tr>
     <td>🛠️</td>
-    <td>Report</td>
+    <td>Test Cases</td>
     <td><a href="Report.pdf">Link</a></td>
   </tr>
   <tr>
