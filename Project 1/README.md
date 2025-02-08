@@ -1,6 +1,5 @@
 # CS458 - Project 1
 
-## 📌 Introduction
 This project focuses on **test automation for web login pages** as part of the CS458 course. The primary goal is to implement a login system, develop test cases, and automate the testing process using **Selenium**.
 
 ## 📦 Project Deliverables
