@@ -4,13 +4,26 @@ This project focuses on **test automation for web login pages** as part of the C
 
 ## 📦 Project Deliverables
 <table align="center">
+    <th>Status</th>
     <th>Deliverable</th>
     <th>Link</th>
   <tr>
+    <td>✅</td>
+    <td>Login App</td>
+    <td><a href="Report.pdf">Link</a></td>
+  </tr>
+  <tr>
+    <td>🛠️</td>
     <td>Report</td>
     <td><a href="Report.pdf">Link</a></td>
   </tr>
   <tr>
+    <td>🛠️</td>
+    <td>Report</td>
+    <td><a href="Report.pdf">Link</a></td>
+  </tr>
+  <tr>
+    <td>🛠️</td>
     <td>UML Diagrams</td>
     <td><a href="/UML Diagrams">Link</a></td>
   </tr>
