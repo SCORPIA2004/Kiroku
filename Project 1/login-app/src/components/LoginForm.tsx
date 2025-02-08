@@ -9,12 +9,12 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
 } from "firebase/auth";
+import { FaGoogle, FaFacebookF } from "react-icons/fa";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -30,11 +30,10 @@ const LoginForm = () => {
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, provider);
       navigate("/success");
     } catch (error) {
       setPopupMessage("Google login failed. Please try again.");
-
       console.error("Google login failed", error);
     }
   };
@@ -42,11 +41,10 @@ const LoginForm = () => {
   const handleFacebookLogin = async () => {
     try {
       const provider = new FacebookAuthProvider();
-      const result = await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, provider);
       navigate("/success");
     } catch (error) {
       setPopupMessage("Facebook login failed. Please try again.");
-
       console.error("Facebook login failed", error);
     }
   };
@@ -57,27 +55,37 @@ const LoginForm = () => {
         <Popup message={popupMessage} onClose={() => setPopupMessage(null)} />
       )}
       <div className={styles.container}>
-        <h2>Login</h2>
+        <h2 className={styles.title}>Welcome Back</h2>
+        <p className={styles.subtitle}>Log in to continue</p>
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             type="email"
             placeholder="Email or Phone"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
-          <button type="submit">Login</button>
-          {error && <p className={styles.error}>{error}</p>}
+          <button type="submit" className={styles.loginBtn}>
+            Login
+          </button>
         </form>
 
+        <p className={styles.orText}>or continue with</p>
+
         <div className={styles.oauth}>
-          <button onClick={handleGoogleLogin}>Login with Google</button>
-          <button onClick={handleFacebookLogin}>Login with Facebook</button>
+          <button onClick={handleGoogleLogin} className={styles.googleBtn}>
+            <FaGoogle />
+          </button>
+          <button onClick={handleFacebookLogin} className={styles.facebookBtn}>
+            <FaFacebookF />
+          </button>
         </div>
       </div>
     </>
