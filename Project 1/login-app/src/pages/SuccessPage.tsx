@@ -1,9 +1,12 @@
+// SuccessPage.tsx
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
 import { signOut } from "firebase/auth";
+import styles from "../styles/SuccessPage.module.css";
 
 const SuccessPage = () => {
   const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -14,9 +17,9 @@ const SuccessPage = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "5rem" }}>
-      <h2>Login Successful!</h2>
-      <button onClick={handleLogout} style={{ width: "10rem" }}>
+    <div className={styles.container}>
+      <h2 className={styles.heading}>Login Successful!</h2>
+      <button onClick={handleLogout} className={styles.logoutButton}>
         Logout
       </button>
     </div>
