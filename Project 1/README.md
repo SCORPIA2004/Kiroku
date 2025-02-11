@@ -15,12 +15,12 @@ This project focuses on **test automation for web login pages** as part of the C
   <tr>
     <td>🛠️</td>
     <td>Test Cases</td>
-    <td><a href="Report.pdf">Link</a></td>
+    <td><a href="">Link</a></td>
   </tr>
   <tr>
     <td>🛠️</td>
     <td>Report</td>
-    <td><a href="Report.pdf">Link</a></td>
+    <td><a href="https://docs.google.com/document/d/19rzJR0ui6E9wHNNmZ_ujqkjdmqrCyAMPxBCdWeV9kaI/edit?usp=sharing">Link</a></td>
   </tr>
   <tr>
     <td>🛠️</td>
