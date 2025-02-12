@@ -69,7 +69,6 @@ const LoginForm = () => {
             placeholder="Email or Phone"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
           />
           <input
             name="password"
@@ -77,7 +76,6 @@ const LoginForm = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
           <button name="login-button" type="submit" className={styles.loginBtn}>
             Login
