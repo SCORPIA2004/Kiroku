@@ -88,14 +88,14 @@ const LoginForm = () => {
 
         <div className={styles.oauth}>
           <button
-            name="google-login-button"
+            name="google-login"
             onClick={handleGoogleLogin}
             className={styles.googleBtn}
           >
             <FaGoogle />
           </button>
           <button
-            name="facebook-login-button"
+            name="facebook-login"
             onClick={handleFacebookLogin}
             className={styles.facebookBtn}
           >
