@@ -64,6 +64,7 @@ const LoginForm = () => {
         <p className={styles.subtitle}>Log in to continue</p>
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
+            name="email"
             type="email"
             placeholder="Email or Phone"
             value={email}
@@ -71,6 +72,7 @@ const LoginForm = () => {
             required
           />
           <input
+            name="password"
             type="password"
             placeholder="Password"
             value={password}
