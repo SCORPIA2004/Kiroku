@@ -16,9 +16,9 @@ class TestLogin(unittest.TestCase):
     def setUpClass(cls):
         """Setup Chrome WebDriver"""
         options = webdriver.ChromeOptions()
-        options.add_argument("--start-maximized")  # Ensure UI is fully visible
+        # options.add_argument("--start-maximized")  # Ensure UI is fully visible
         # Uncomment this line to run in headless mode (for CI/CD)
-        # options.add_argument("--headless")
+        options.add_argument("--headless")
         
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
