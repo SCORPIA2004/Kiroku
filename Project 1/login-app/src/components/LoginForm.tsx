@@ -79,7 +79,7 @@ const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" className={styles.loginBtn}>
+          <button name="login-button" type="submit" className={styles.loginBtn}>
             Login
           </button>
         </form>
@@ -87,10 +87,18 @@ const LoginForm = () => {
         <p className={styles.orText}>or continue with</p>
 
         <div className={styles.oauth}>
-          <button onClick={handleGoogleLogin} className={styles.googleBtn}>
+          <button
+            name="google-login-button"
+            onClick={handleGoogleLogin}
+            className={styles.googleBtn}
+          >
             <FaGoogle />
           </button>
-          <button onClick={handleFacebookLogin} className={styles.facebookBtn}>
+          <button
+            name="facebook-login-button"
+            onClick={handleFacebookLogin}
+            className={styles.facebookBtn}
+          >
             <FaFacebookF />
           </button>
         </div>
