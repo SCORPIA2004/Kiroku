@@ -10,6 +10,7 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
+import { credentials } from "../utils/data";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -20,7 +21,11 @@ const LoginForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (email === "test@example.com" && password === "password123") {
+    const userExists = credentials.some(
+      (cred) => cred.email === email && cred.password === password
+    );
+
+    if (userExists) {
       navigate("/success");
     } else {
       setPopupMessage("Invalid email or password.");
