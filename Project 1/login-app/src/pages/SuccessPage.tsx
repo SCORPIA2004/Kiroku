@@ -19,7 +19,9 @@ const SuccessPage = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Login Successful!</h2>
-      <button onClick={handleLogout} className={styles.logoutButton}>
+      <button
+        name="logout-button"
+      onClick={handleLogout} className={styles.logoutButton}>
         Logout
       </button>
     </div>

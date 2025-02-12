@@ -8,10 +8,12 @@ interface PopupProps {
 
 const Popup: React.FC<PopupProps> = ({ message, onClose }) => {
   return (
-    <div className={styles.popupOverlay}>
+    <div name="popup-container" className={styles.popupOverlay}>
       <div className={styles.popup}>
-        <p>{message}</p>
-        <button onClick={onClose}>Close</button>
+        <p name="popup-message">{message}</p>
+        <button name="popup-close" onClick={onClose}>
+          Close
+        </button>
       </div>
     </div>
   );
