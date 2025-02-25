@@ -85,6 +85,13 @@ const LoginForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
           <button name="login-button" type="submit" className={styles.loginBtn}>
             Login
