@@ -13,8 +13,7 @@ import unittest
 # SUCCESS_URL = "https://login-app-seven-zeta.vercel.app/success"
 
 LOGIN_URL = "http://localhost:3001/"
-SUCCESS_URL = "https://login-app-seven-zeta.vercel.app/success"
-
+SUCCESS_URL = "http://localhost:3001/success"
 
 class TestLogin(unittest.TestCase):
     @classmethod
@@ -205,8 +204,7 @@ class TestLogin(unittest.TestCase):
         
         # Open browser and login with 'Remember Me' checked
         options = webdriver.ChromeOptions()
-        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-        driver = cls.driver
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
         driver.get(LOGIN_URL)
 
@@ -240,7 +238,6 @@ class TestLogin(unittest.TestCase):
         self.assertIn("success", driver.current_url.lower())
 
         # Cleanup: Logout and clear localStorage
-        self.logout()
         driver.quit()
 
 

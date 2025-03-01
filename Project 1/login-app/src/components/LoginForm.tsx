@@ -91,6 +91,7 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             name="email"
+            type="email"
             placeholder="Email or Phone"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
