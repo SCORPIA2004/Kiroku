@@ -1,3 +1,4 @@
+// Popup.tsx
 import React from "react";
 import styles from "../styles/Popup.module.css";
 

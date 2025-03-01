@@ -1,5 +1,5 @@
 // LoginForm.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/LoginForm.module.css";
 import Popup from "./Popup";
@@ -53,6 +53,18 @@ const LoginForm = () => {
       console.error("Facebook login failed", error);
     }
   };
+
+  useEffect(() => {
+    const handleOffline = () => {
+      setPopupMessage("No internet connection. Please check your network.");
+    };
+
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
 
   return (
     <>
