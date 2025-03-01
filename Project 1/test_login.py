@@ -9,11 +9,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 import unittest
 
 # Constants
-# LOGIN_URL = "https://login-app-seven-zeta.vercel.app/"
-# SUCCESS_URL = "https://login-app-seven-zeta.vercel.app/success"
+LOGIN_URL = "https://login-app-seven-zeta.vercel.app/"
+SUCCESS_URL = "https://login-app-seven-zeta.vercel.app/success"
 
-LOGIN_URL = "http://localhost:3001/"
-SUCCESS_URL = "http://localhost:3001/success"
+# LOGIN_URL = "http://localhost:3001/"
+# SUCCESS_URL = "http://localhost:3001/success"
 
 class TestLogin(unittest.TestCase):
     @classmethod
