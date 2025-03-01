@@ -17,6 +17,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,11 +27,24 @@ const LoginForm = () => {
     );
 
     if (userExists) {
+      if (rememberMe) {
+        localStorage.setItem("loggedInUser", email); // Store user session
+      } else {
+        sessionStorage.setItem("loggedInUser", email); // Temporary session
+      }
       navigate("/success");
     } else {
       setPopupMessage("Invalid email or password.");
     }
   };
+
+  // Check if the user is already logged in
+  useEffect(() => {
+    const savedUser = localStorage.getItem("loggedInUser");
+    if (savedUser) {
+      navigate("/success");
+    }
+  }, []);
 
   const handleGoogleLogin = async () => {
     try {
@@ -88,6 +102,15 @@ const LoginForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <label className={styles.rememberMe}>
+            <input
+              type="checkbox"
+              name="remember-me"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+            />
+            Remember Me
+          </label>
 
           <button name="login-button" type="submit" className={styles.loginBtn}>
             Login

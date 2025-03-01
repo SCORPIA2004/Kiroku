@@ -1,3 +1,4 @@
+# test_login.py
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -8,8 +9,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 import unittest
 
 # Constants
-LOGIN_URL = "https://login-app-seven-zeta.vercel.app/"
+# LOGIN_URL = "https://login-app-seven-zeta.vercel.app/"
+# SUCCESS_URL = "https://login-app-seven-zeta.vercel.app/success"
+
+LOGIN_URL = "http://localhost:3001/"
 SUCCESS_URL = "https://login-app-seven-zeta.vercel.app/success"
+
 
 class TestLogin(unittest.TestCase):
     @classmethod
@@ -194,6 +199,50 @@ class TestLogin(unittest.TestCase):
                 "downloadThroughput": 5000 * 1024,
                 "uploadThroughput": 5000 * 1024
             })
+
+    def test_remember_me(self):
+        """Test if 'Remember Me' keeps the user logged in after closing and reopening the browser."""
+        
+        # Open browser and login with 'Remember Me' checked
+        options = webdriver.ChromeOptions()
+        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        driver = cls.driver
+
+        driver.get(LOGIN_URL)
+
+        WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.TAG_NAME, "form")))
+
+        email_input = driver.find_element(By.NAME, "email")
+        password_input = driver.find_element(By.NAME, "password")
+        remember_me_checkbox = driver.find_element(By.NAME, "remember-me")
+        login_button = driver.find_element(By.NAME, "login-button")
+
+        email_input.clear()
+        password_input.clear()
+        email_input.send_keys("test@example.com")
+        password_input.send_keys("password123")
+
+        # Check "Remember Me"
+        if not remember_me_checkbox.is_selected():
+            remember_me_checkbox.click()
+
+        login_button.click()
+
+        WebDriverWait(driver, 10).until(EC.url_contains("success"))
+        self.assertIn("success", driver.current_url.lower())
+
+        # Close and restart browser
+        driver.quit()
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        driver.get(SUCCESS_URL)
+
+        # Verify user is still logged in
+        self.assertIn("success", driver.current_url.lower())
+
+        # Cleanup: Logout and clear localStorage
+        self.logout()
+        driver.quit()
+
 
     @classmethod
     def tearDownClass(cls):
