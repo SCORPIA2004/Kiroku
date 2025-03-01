@@ -200,11 +200,9 @@ class TestLogin(unittest.TestCase):
             })
 
     def test_remember_me(self):
-        """Test if 'Remember Me' keeps the user logged in after closing and reopening the browser."""
+        """Test if 'Remember Me' keeps the user logged in when returning to the site."""
         
-        # Open browser and login with 'Remember Me' checked
-        options = webdriver.ChromeOptions()
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        driver = self.driver  # Use the existing WebDriver instance
 
         driver.get(LOGIN_URL)
 
@@ -226,19 +224,23 @@ class TestLogin(unittest.TestCase):
 
         login_button.click()
 
+        # Wait until redirected to /success
         WebDriverWait(driver, 10).until(EC.url_contains("success"))
         self.assertIn("success", driver.current_url.lower())
 
-        # Close and restart browser
-        driver.quit()
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-        driver.get(SUCCESS_URL)
+        # Verify localStorage has saved the session
+        logged_in_user = driver.execute_script("return localStorage.getItem('loggedInUser');")
+        self.assertIsNotNone(logged_in_user, "User session should be saved in localStorage")
 
-        # Verify user is still logged in
-        self.assertIn("success", driver.current_url.lower())
+        # Navigate back to the login page
+        driver.get(LOGIN_URL)
+
+        # Wait and check if the app automatically redirects to /success
+        WebDriverWait(driver, 10).until(EC.url_contains("success"))
+        self.assertIn("success", driver.current_url.lower(), "User should be redirected to /success after returning to /")
 
         # Cleanup: Logout and clear localStorage
-        driver.quit()
+        self.logout()
 
 
     @classmethod
