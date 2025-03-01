@@ -17,7 +17,6 @@ class TestLogin(unittest.TestCase):
         """Setup Chrome WebDriver"""
         options = webdriver.ChromeOptions()
         # options.add_argument("--start-maximized")  # Ensure UI is fully visible
-        # Uncomment this line to run in headless mode (for CI/CD)
         options.add_argument("--headless")
         
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
@@ -107,6 +106,34 @@ class TestLogin(unittest.TestCase):
         close_button = driver.find_element(By.NAME, "popup-close")
         close_button.click()
 
+    def test_invalid_email_format(self):
+        """Test login with an incorrectly formatted email shows error message"""
+        driver = self.driver
+
+        WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.TAG_NAME, "form")))
+
+        email_input = driver.find_element(By.NAME, "email")
+        password_input = driver.find_element(By.NAME, "password")
+        login_button = driver.find_element(By.NAME, "login-button")
+
+        email_input.clear()
+        password_input.clear()
+        # Input an email that does not follow the proper format
+        email_input.send_keys("invalid-email-format")  # Missing '@' and domain
+        password_input.send_keys("password123")
+        login_button.click()
+
+        # Wait for the error popup message to appear
+        popup_container = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.NAME, "popup-container"))
+        )
+        popup_message = driver.find_element(By.NAME, "popup-message").text
+        self.assertIn("invalid", popup_message.lower())
+
+        # Close the popup to reset the state
+        close_button = driver.find_element(By.NAME, "popup-close")
+        close_button.click()
+
     def test_google_login_button(self):
         """Test if Google login button is present and clickable"""
         driver = self.driver
@@ -120,6 +147,41 @@ class TestLogin(unittest.TestCase):
 
         fb_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, "facebook-login")))
         self.assertTrue(fb_button.is_displayed())
+
+    def test_internet_disconnect(self):
+        """Test login behavior when the internet disconnects immediately after clicking login"""
+        driver = self.driver
+
+        WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.TAG_NAME, "form")))
+
+        email_input = driver.find_element(By.NAME, "email")
+        password_input = driver.find_element(By.NAME, "password")
+        login_button = driver.find_element(By.NAME, "login-button")
+
+        email_input.clear()
+        password_input.clear()
+        email_input.send_keys("test@example.com")
+        password_input.send_keys("password123")
+
+        # Click login, then immediately simulate a network disconnection
+        login_button.click()
+
+        # Enable network emulation and set the network to offline
+        driver.execute_cdp_cmd("Network.enable", {})
+        driver.execute_cdp_cmd("Network.emulateNetworkConditions", {
+            "offline": True,
+            "latency": 0,
+            "downloadThroughput": 0,
+            "uploadThroughput": 0
+        })
+
+        # Wait for the error popup to appear as a result of network failure
+        popup_container = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.NAME, "popup-container"))
+        )
+        popup_message = driver.find_element(By.NAME, "popup-message").text
+        self.assertIn("network", popup_message.lower())
+
 
     @classmethod
     def tearDownClass(cls):

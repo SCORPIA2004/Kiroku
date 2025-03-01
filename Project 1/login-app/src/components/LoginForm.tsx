@@ -16,7 +16,6 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -66,24 +65,9 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             name="email"
-            type="email"
             placeholder="Email or Phone"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            name="username"
-            type="username"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
           />
           <input
             name="password"
