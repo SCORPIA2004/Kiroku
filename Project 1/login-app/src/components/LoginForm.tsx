@@ -103,6 +103,9 @@ const LoginForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <button name="login-button" type="submit" className={styles.loginBtn}>
+            Login
+          </button>
           <label className={styles.rememberMe}>
             <input
               type="checkbox"
@@ -112,10 +115,6 @@ const LoginForm = () => {
             />
             Remember Me
           </label>
-
-          <button name="login-button" type="submit" className={styles.loginBtn}>
-            Login
-          </button>
         </form>
 
         <p className={styles.orText}>or continue with</p>
