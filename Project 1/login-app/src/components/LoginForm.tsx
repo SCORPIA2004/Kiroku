@@ -49,8 +49,13 @@ const LoginForm = () => {
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-      navigate("/success");
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      if (user) {
+        localStorage.setItem("loggedInUser", user.email || "GoogleUser");
+        navigate("/success");
+      }
     } catch (error) {
       setPopupMessage("Google login failed. Please try again.");
       console.error("Google login failed", error);
@@ -60,8 +65,13 @@ const LoginForm = () => {
   const handleFacebookLogin = async () => {
     try {
       const provider = new FacebookAuthProvider();
-      await signInWithPopup(auth, provider);
-      navigate("/success");
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      if (user) {
+        localStorage.setItem("loggedInUser", user.email || "FacebookUser");
+        navigate("/success");
+      }
     } catch (error) {
       setPopupMessage("Facebook login failed. Please try again.");
       console.error("Facebook login failed", error);
