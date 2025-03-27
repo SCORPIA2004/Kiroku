@@ -1,3 +1,4 @@
+// ./src/pages/SuccessPage.tsx
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
 import { signOut } from "firebase/auth";
