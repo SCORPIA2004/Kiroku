@@ -8,7 +8,7 @@ import SuccessScreen from "./screens/SuccessScreen";
 
 export type RootStackParamList = {
   Login: undefined;
-  Survey: undefined;
+  Survey: { email: string };
   Success: undefined;
 };
 

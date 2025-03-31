@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from "react-native";
 export default function SuccessScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Success Screen</Text>
+      <Text style={styles.text}>Form submitted</Text>
     </View>
   );
 }

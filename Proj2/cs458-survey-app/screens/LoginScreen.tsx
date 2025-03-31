@@ -1,15 +1,24 @@
 // screens/LoginScreen.tsx
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../App"; // Adjust the path if needed
-import styles from "../styles/styles"; // adjust path if needed
+import { RootStackParamList } from "../App";
+import styles from "../styles/styles";
 import Popup from "../components/Popup";
 
-// Dummy credentials array (you can move this to utils/data.ts later)
+// Dummy credentials array
 const credentials = [
   { email: "test@example.com", password: "1" },
+  { email: "mshayan4386@gmail.com", password: "1" },
   { email: "user1@example.com", password: "securepass1" },
   { email: "admin@example.com", password: "admin123" },
   { email: "doctor@example.com", password: "medic987" },
@@ -25,7 +34,7 @@ export default function LoginScreen() {
   const navigation = useNavigation<LoginScreenNavigationProp>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false); // You can add a switch later
+  const [rememberMe, setRememberMe] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
 
@@ -34,8 +43,7 @@ export default function LoginScreen() {
       (cred) => cred.email === email && cred.password === password
     );
     if (userExists) {
-      // Navigate to the Survey screen (or Success screen if preferred)
-      navigation.navigate("Survey");
+      navigation.navigate("Survey", { email });
     } else {
       setPopupMessage("Invalid email or password.");
       setPopupVisible(true);
