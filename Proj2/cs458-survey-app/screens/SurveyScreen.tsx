@@ -102,8 +102,16 @@ export default function SurveyScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      testID="survey-scrollview"
+      accessibilityLabel="survey-scrollview"
+    >
+      <View
+        style={styles.container}
+        testID="survey-container"
+        accessibilityLabel="survey-container"
+      >
         <Text style={styles.title}>AI Usage Survey</Text>
         {/* Name */}
         <TextInput
@@ -111,17 +119,23 @@ export default function SurveyScreen() {
           placeholder="Name"
           value={name}
           onChangeText={setName}
+          testID="name-input"
+          accessibilityLabel="name-input"
         />
         <TextInput
           style={styles.input}
           placeholder="Surname"
           value={surname}
           onChangeText={setSurname}
+          testID="surname-input"
+          accessibilityLabel="surname-input"
         />
         {/* Birth Date */}
         <TouchableOpacity
           onPress={() => setShowDatePicker(true)}
           style={styles.input}
+          testID="birthdate-picker"
+          accessibilityLabel="birthdate-picker"
         >
           <Text>
             {birthDate ? birthDate.toDateString() : "Select Birth Date"}
@@ -136,6 +150,7 @@ export default function SurveyScreen() {
               setShowDatePicker(false);
               if (selectedDate) setBirthDate(selectedDate);
             }}
+            testID="birthdate-native-picker"
           />
         )}
         {/* Education Level */}
@@ -143,6 +158,8 @@ export default function SurveyScreen() {
           <Picker
             selectedValue={education}
             onValueChange={(itemValue) => setEducation(itemValue)}
+            testID="education-picker"
+            accessibilityLabel="education-picker"
           >
             <Picker.Item label="Select Education Level" value="" />
             <Picker.Item label="High School" value="High School" />
@@ -157,12 +174,16 @@ export default function SurveyScreen() {
           placeholder="City"
           value={city}
           onChangeText={setCity}
+          testID="city-input"
+          accessibilityLabel="city-input"
         />
         {/* Gender */}
         <View style={styles.pickerContainer}>
           <Picker
             selectedValue={gender}
             onValueChange={(itemValue) => setGender(itemValue)}
+            testID="gender-picker"
+            accessibilityLabel="gender-picker"
           >
             <Picker.Item label="Select Gender" value="" />
             <Picker.Item label="Male" value="Male" />
@@ -179,6 +200,8 @@ export default function SurveyScreen() {
             <TouchableOpacity
               style={styles.checkbox}
               onPress={() => toggleModel(model)}
+              testID={`checkbox-${model}`}
+              accessibilityLabel={`checkbox-${model}`}
             >
               <FontAwesome
                 name={
@@ -200,6 +223,8 @@ export default function SurveyScreen() {
             onChangeText={(text) =>
               setDefects((prev) => ({ ...prev, [model]: text }))
             }
+            testID={`defect-${model}`}
+            accessibilityLabel={`defect-${model}`}
           />
         ))}
 
@@ -213,6 +238,8 @@ export default function SurveyScreen() {
           numberOfLines={4}
           value={useCase}
           onChangeText={setUseCase}
+          testID="usecase-input"
+          accessibilityLabel="usecase-input"
         />
 
         {isFormComplete() &&
@@ -221,9 +248,16 @@ export default function SurveyScreen() {
               size="large"
               color="#007bff"
               style={{ marginTop: 20 }}
+              testID="loading-spinner"
+              accessibilityLabel="loading-spinner"
             />
           ) : (
-            <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+            <TouchableOpacity
+              style={styles.sendButton}
+              onPress={handleSend}
+              testID="send-button"
+              accessibilityLabel="send-button"
+            >
               <Text style={styles.sendButtonText}>Send</Text>
             </TouchableOpacity>
           ))}

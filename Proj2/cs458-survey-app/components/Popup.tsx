@@ -14,12 +14,39 @@ const Popup: React.FC<PopupProps> = ({ visible, message, onClose }) => {
       transparent
       animationType="fade"
       onRequestClose={onClose}
+      testID="popup-modal"
+      accessibilityLabel="popup-modal"
     >
-      <View style={styles.popupOverlay}>
-        <View style={styles.popup}>
-          <Text style={styles.popupMessage}>{message}</Text>
-          <TouchableOpacity style={styles.popupClose} onPress={onClose}>
-            <Text style={styles.popupCloseText}>Close</Text>
+      <View
+        style={styles.popupOverlay}
+        testID="popup-overlay"
+        accessibilityLabel="popup-overlay"
+      >
+        <View
+          style={styles.popup}
+          testID="popup-content"
+          accessibilityLabel="popup-content"
+        >
+          <Text
+            style={styles.popupMessage}
+            testID="popup-message"
+            accessibilityLabel="popup-message"
+          >
+            {message}
+          </Text>
+          <TouchableOpacity
+            style={styles.popupClose}
+            onPress={onClose}
+            testID="popup-close-button"
+            accessibilityLabel="popup-close-button"
+          >
+            <Text
+              style={styles.popupCloseText}
+              testID="popup-close-text"
+              accessibilityLabel="popup-close-text"
+            >
+              Close
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -4,8 +4,18 @@ import { View, Text, StyleSheet } from "react-native";
 
 export default function SuccessScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Form submitted</Text>
+    <View
+      style={styles.container}
+      testID="success-container"
+      accessibilityLabel="success-container"
+    >
+      <Text
+        style={styles.text}
+        testID="success-message"
+        accessibilityLabel="success-message"
+      >
+        Form submitted
+      </Text>
     </View>
   );
 }

@@ -9,6 +9,7 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
+import "expo-dev-client";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
@@ -18,7 +19,7 @@ import Popup from "../components/Popup";
 // Dummy credentials array
 const credentials = [
   { email: "test@example.com", password: "1" },
-  { email: "mshayan4386@gmail.com", password: "1" },
+  { email: "cs458proj2@zohomail.eu", password: "dG:]31ZYx=r5" },
   { email: "user1@example.com", password: "securepass1" },
   { email: "admin@example.com", password: "admin123" },
   { email: "doctor@example.com", password: "medic987" },
@@ -53,8 +54,12 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome Back</Text>
+    <View
+      style={styles.container}
+      testID="login-screen"
+      accessibilityLabel="login-screen"
+    >
+      <Text style={styles.title}>Hello there</Text>
       <Text style={styles.subtitle}>Log in to continue</Text>
       <TextInput
         style={styles.input}
@@ -63,6 +68,8 @@ export default function LoginScreen() {
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        testID="email-input"
+        accessibilityLabel="email-input"
       />
       <TextInput
         style={styles.input}
@@ -70,8 +77,15 @@ export default function LoginScreen() {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        testID="password-input"
+        accessibilityLabel="password-input"
       />
-      <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={handleSubmit}
+        testID="login-button"
+        accessibilityLabel="login-button"
+      >
         <Text style={styles.loginBtnText}>Login</Text>
       </TouchableOpacity>
 

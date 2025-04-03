@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "267596754988",
+    "project_id": "cs458-project-2",
+    "storage_bucket": "cs458-project-2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267596754988:android:43f7812ad7b02ddce1e189",
+        "android_client_info": {
+          "package_name": "com.shayan2004.cs458surveyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267596754988-76r3e3ddulk4970v4dejnlf6gbsjhjk4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shayan2004.cs458surveyapp",
+            "certificate_hash": "2ca3bcebe2c258b1580bb144397aa288f5a56d52"
+          }
+        },
+        {
+          "client_id": "267596754988-cd1sskgbl0mqb953tmck6oe323gs23bf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shayan2004.cs458surveyapp",
+            "certificate_hash": "cfb23137517efb152d17bfa35999b0cc282c05fc"
+          }
+        },
+        {
+          "client_id": "267596754988-gf5e8fppgpko5e60qdj1jee6vm15g4sh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcwly2Mfdgvox8ayHLAOJ_ILKzzwXlp5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267596754988-gf5e8fppgpko5e60qdj1jee6vm15g4sh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
