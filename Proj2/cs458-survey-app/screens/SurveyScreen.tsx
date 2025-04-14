@@ -18,6 +18,7 @@ import { RootStackParamList } from "../App";
 import { RouteProp, useRoute, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import emailjs from "emailjs-com";
+import Popup from "../components/Popup";
 
 import styles from "../styles/SurveyScreen";
 
@@ -31,6 +32,8 @@ export default function SurveyScreen() {
   const navigation = useNavigation<SurveyScreenNavigationProp>();
   const userEmail = route.params.email;
   const [loading, setLoading] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -62,12 +65,50 @@ export default function SurveyScreen() {
     );
   };
 
+  function isAlphaOnly(name: string) {
+    const regex = /^[a-zA-Z]+$/;
+    return regex.test(name);
+  }
+
   const handleSend = () => {
+    if (!name || !surname || !birthDate || !education || !city || !gender) {
+      setPopupMessage("Please fill out all required fields.");
+      setPopupVisible(true);
+      return;
+    }
+
+    if (!isAlphaOnly(name) || !isAlphaOnly(surname) || !isAlphaOnly(city)) {
+      setPopupMessage("Name, surname, and city must only contain letters.");
+      setPopupVisible(true);
+      return;
+    }
+
+    if (selectedModels.length === 0) {
+      setPopupMessage("Please select at least one AI model.");
+      setPopupVisible(true);
+      return;
+    }
+
+    const hasModelDefects = selectedModels.every((model) =>
+      defects[model]?.trim()
+    );
+    if (!hasModelDefects) {
+      setPopupMessage("Please describe defects for all selected models.");
+      setPopupVisible(true);
+      return;
+    }
+
+    if (!useCase.trim()) {
+      setPopupMessage("Please describe how you use AI.");
+      setPopupVisible(true);
+      return;
+    }
+
     setLoading(true);
     const templateParams = {
       to_email: userEmail,
-      name: name,
-      surname: surname,
+      name,
+      surname,
       birthDate: birthDate?.toDateString(),
       education,
       city,
@@ -85,16 +126,12 @@ export default function SurveyScreen() {
         "Z08vVgzlL6Jd0XJSS"
       )
       .then(() => {
-        Alert.alert(
-          "Success",
-          "Survey sent successfully! Results have been sent to your email: " +
-            userEmail
-        );
         navigation.navigate("Success");
       })
       .catch((error) => {
         console.error("Email failed:", error);
-        Alert.alert("Error", "Failed to send survey.");
+        setPopupMessage("Failed to send survey.");
+        setPopupVisible(true);
       })
       .finally(() => {
         setLoading(false);
@@ -242,25 +279,37 @@ export default function SurveyScreen() {
           accessibilityLabel="usecase-input"
         />
 
-        {isFormComplete() &&
-          (loading ? (
-            <ActivityIndicator
-              size="large"
-              color="#007bff"
-              style={{ marginTop: 20 }}
-              testID="loading-spinner"
-              accessibilityLabel="loading-spinner"
-            />
-          ) : (
-            <TouchableOpacity
-              style={styles.sendButton}
-              onPress={handleSend}
-              testID="send-button"
-              accessibilityLabel="send-button"
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#007bff"
+            style={{ marginTop: 20 }}
+            testID="loading-spinner"
+            accessibilityLabel="loading-spinner"
+          />
+        ) : (
+          <TouchableOpacity
+            style={styles.sendButton}
+            onPress={handleSend}
+            testID="send-button"
+            accessibilityLabel="send-button"
+          >
+            <Text
+              style={styles.sendButtonText}
+              testID="send-button-text"
+              accessibilityLabel="send-button-text"
             >
-              <Text style={styles.sendButtonText}>Send</Text>
-            </TouchableOpacity>
-          ))}
+              Send
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        <Popup
+          visible={popupVisible}
+          message={popupMessage}
+          onClose={() => setPopupVisible(false)}
+        />
+        
       </View>
     </ScrollView>
   );
