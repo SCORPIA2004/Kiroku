@@ -1,0 +1,32 @@
+/* SuccessPage.module.css */
+
+.container {
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.logoutButton {
+  font-family: inherit;
+  width: 10rem;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.logoutButton:hover {
+  background: #0056b3;
+}
