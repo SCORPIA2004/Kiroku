@@ -59,7 +59,12 @@ const SurveyPage: React.FC = () => {
       <form onSubmit={handleSubmit} className={styles.form}>
         {survey.questions.map((q) =>
           isVisible(q) ? (
-            <div key={q.id} className={styles.question} id={`question-${q.id}`}>
+            <div
+              key={q.id}
+              className={styles.question}
+              id={`question-${q.id}`}
+              name={`question-container-${q.id}`}
+            >
               <label htmlFor={q.id}>{q.prompt}</label>
               {q.type === "mc" &&
                 q.options?.map((opt, i) => (
