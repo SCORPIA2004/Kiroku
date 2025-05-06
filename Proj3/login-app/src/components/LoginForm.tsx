@@ -32,7 +32,7 @@ const LoginForm = () => {
       } else {
         sessionStorage.setItem("loggedInUser", email); // Temporary session
       }
-      navigate("/success");
+      navigate("/surveys");
     } else {
       setPopupMessage("Invalid email or password.");
     }
@@ -42,7 +42,7 @@ const LoginForm = () => {
   useEffect(() => {
     const savedUser = localStorage.getItem("loggedInUser");
     if (savedUser) {
-      navigate("/success");
+      navigate("/surveys");
     }
   }, []);
 
@@ -54,7 +54,7 @@ const LoginForm = () => {
 
       if (user) {
         localStorage.setItem("loggedInUser", user.email || "GoogleUser");
-        navigate("/success");
+        navigate("/surveys");
       }
     } catch (error) {
       setPopupMessage("Google login failed. Please try again.");
@@ -70,7 +70,7 @@ const LoginForm = () => {
 
       if (user) {
         localStorage.setItem("loggedInUser", user.email || "FacebookUser");
-        navigate("/success");
+        navigate("/surveys");
       }
     } catch (error) {
       setPopupMessage("Facebook login failed. Please try again.");

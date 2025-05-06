@@ -1,0 +1,79 @@
+/* src/styles/SurveyDesignerPage.module.css */
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.heading {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.questionForm,
+.preview {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.questionForm h3,
+.preview h3 {
+  margin-top: 0;
+}
+
+.questionForm label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.questionForm input[type="text"],
+.questionForm select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.preview ul {
+  list-style: none;
+  padding: 0;
+}
+
+.preview li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+button[name="save-question"],
+button[name="save-survey"],
+button[name="add-option"],
+button[name="edit-question"],
+button[name="delete-question"] {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  .heading {
+    font-size: 1.5rem;
+  }
+
+  .preview li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
