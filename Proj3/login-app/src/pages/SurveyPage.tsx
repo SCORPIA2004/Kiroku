@@ -1,18 +1,28 @@
 // src/pages/SurveyPage.tsx
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useMemo } from "react";
 import { dummySurveys } from "../utils/dummySurveys";
-import { Question } from "../types/survey";
+import { Question, Survey } from "../types/survey";
 import styles from "../styles/SurveyPage.module.css";
 
-const SurveyPage = () => {
-  const { surveyId } = useParams();
+const SurveyPage: React.FC = () => {
+  const { surveyId } = useParams<{ surveyId: string }>();
   const navigate = useNavigate();
-  const survey = useMemo(
-    () => dummySurveys.find((s) => s.id === surveyId),
-    [surveyId]
-  );
+
+  // First try to load any saved/edited survey from localStorage;
+  // if none, fall back to the dummySurveys.
+  const survey: Survey | undefined = useMemo(() => {
+    if (!surveyId) return undefined;
+    const saved = localStorage.getItem("survey-" + surveyId);
+    if (saved) {
+      try {
+        return JSON.parse(saved) as Survey;
+      } catch {
+        console.warn("Failed to parse saved survey:", surveyId);
+      }
+    }
+    return dummySurveys.find((s) => s.id === surveyId);
+  }, [surveyId]);
 
   const [answers, setAnswers] = useState<{ [key: string]: any }>({});
   const [errors, setErrors] = useState<string[]>([]);
@@ -36,11 +46,11 @@ const SurveyPage = () => {
 
     if (missing.length) {
       setErrors(missing);
-    } else {
-      console.log("Submitted Answers:", answers);
-      alert("Survey submitted successfully!");
-      navigate("/surveys");
+      return;
     }
+    console.log("Submitted Answers:", answers);
+    alert("Survey submitted successfully!");
+    navigate("/surveys");
   };
 
   return (
@@ -68,9 +78,9 @@ const SurveyPage = () => {
               {q.type === "rating" && (
                 <select
                   name={q.id}
+                  id={q.id}
                   value={answers[q.id] || ""}
                   onChange={(e) => handleChange(q.id, parseInt(e.target.value))}
-                  id={q.id}
                 >
                   <option value="">Select</option>
                   {[1, 2, 3, 4, 5].map((n) => (
@@ -106,7 +116,7 @@ const SurveyPage = () => {
               )}
               {q.type === "checkbox" &&
                 q.options?.map((opt, i) => {
-                  const values = answers[q.id] || [];
+                  const vals: string[] = answers[q.id] || [];
                   return (
                     <div key={i}>
                       <input
@@ -114,11 +124,11 @@ const SurveyPage = () => {
                         id={`${q.id}-chk${i}`}
                         name={q.id}
                         value={opt}
-                        checked={values.includes(opt)}
+                        checked={vals.includes(opt)}
                         onChange={(e) => {
                           const newVals = e.target.checked
-                            ? [...values, opt]
-                            : values.filter((v: string) => v !== opt);
+                            ? [...vals, opt]
+                            : vals.filter((v) => v !== opt);
                           handleChange(q.id, newVals);
                         }}
                       />
