@@ -73,3 +73,21 @@ button[type="submit"]:hover {
     font-size: 1.5rem;
   }
 }
+
+/* nicely align radio / checkbox rows */
+.optionRow {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.optionRow label {
+  margin-left: 0.25rem;
+}
+
+/* give the rating <select> the same width & padding as text inputs */
+select[name*="q"] {
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}

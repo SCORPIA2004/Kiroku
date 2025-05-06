@@ -9,6 +9,14 @@ const SurveyDesignerPage: React.FC = () => {
   const { surveyId } = useParams<{ surveyId?: string }>();
   const navigate = useNavigate();
 
+  /* ─────── AUTH GUARD ─────── */
+  React.useEffect(() => {
+    const user =
+      localStorage.getItem("loggedInUser") ||
+      sessionStorage.getItem("loggedInUser");
+    if (!user) navigate("/");
+  }, [navigate]);
+
   // Initialize survey state (load existing or new)
   const initialSurvey: Survey = useMemo(() => {
     if (surveyId) {
@@ -158,6 +166,7 @@ const SurveyDesignerPage: React.FC = () => {
             ))}
             <button
               name="add-option"
+              id={`add-option-${qOptions.length}`}
               onClick={() => setQOptions([...qOptions, ""])}
             >
               Add Option

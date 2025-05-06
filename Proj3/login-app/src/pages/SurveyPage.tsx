@@ -1,5 +1,5 @@
 // src/pages/SurveyPage.tsx
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { dummySurveys } from "../utils/dummySurveys";
 import { Question, Survey } from "../types/survey";
@@ -8,6 +8,14 @@ import styles from "../styles/SurveyPage.module.css";
 const SurveyPage: React.FC = () => {
   const { surveyId } = useParams<{ surveyId: string }>();
   const navigate = useNavigate();
+    /* ─────── AUTH GUARD ─────── */
+  React.useEffect(() => {
+    const user =
+      localStorage.getItem("loggedInUser") ||
+      sessionStorage.getItem("loggedInUser");
+    if (!user) navigate("/");
+  }, [navigate]);
+
 
   // First try to load any saved/edited survey from localStorage;
   // if none, fall back to the dummySurveys.
@@ -68,7 +76,7 @@ const SurveyPage: React.FC = () => {
               <label htmlFor={q.id}>{q.prompt}</label>
               {q.type === "mc" &&
                 q.options?.map((opt, i) => (
-                  <div key={i}>
+                  <div key={i} className={styles.optionRow}>
                     <input
                       type="radio"
                       name={q.id}
@@ -123,7 +131,7 @@ const SurveyPage: React.FC = () => {
                 q.options?.map((opt, i) => {
                   const vals: string[] = answers[q.id] || [];
                   return (
-                    <div key={i}>
+                    <div key={i} className={styles.optionRow}>
                       <input
                         type="checkbox"
                         id={`${q.id}-chk${i}`}

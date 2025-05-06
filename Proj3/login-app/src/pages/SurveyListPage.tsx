@@ -3,11 +3,32 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Survey } from "../types/survey";
 import { dummySurveys } from "../utils/dummySurveys";
+import { auth } from "../firebase/firebaseConfig";
+import { signOut } from "firebase/auth";
+
 import styles from "../styles/SurveyListPage.module.css";
 
 const SurveyListPage: React.FC = () => {
   const navigate = useNavigate();
   const [surveys, setSurveys] = useState<Survey[]>([]);
+  useEffect(() => {
+    const user =
+      localStorage.getItem("loggedInUser") ||
+      sessionStorage.getItem("loggedInUser");
+    if (!user) navigate("/");
+  }, [navigate]);
+
+  /* ───────────── LOGOUT HANDLER ───────────── */
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Firebase sign‑out
+      localStorage.removeItem("loggedInUser"); // clear persistence
+      sessionStorage.removeItem("loggedInUser");
+      navigate("/"); // back to login page
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
 
   useEffect(() => {
     // 1. load all saved surveys from localStorage
@@ -33,7 +54,18 @@ const SurveyListPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.heading}>Available Surveys</h2>
+      <div className={styles.header}>
+        <h2 className={styles.heading}>Available Surveys</h2>
+        <button
+          name="logout-button"
+          id="logout-button"
+          className={styles.logoutButton}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
+
       <ul className={styles.list}>
         {surveys.map((survey) => (
           <li key={survey.id} className={styles.surveyItem}>
