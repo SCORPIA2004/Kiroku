@@ -1,21 +1,26 @@
 // src/pages/SurveyPage.tsx
-import React, { useState, useMemo, } from "react";
+import React, { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { dummySurveys } from "../utils/dummySurveys";
 import { Question, Survey } from "../types/survey";
+import emailjs from "@emailjs/browser";
 import styles from "../styles/SurveyPage.module.css";
 
 const SurveyPage: React.FC = () => {
+  const currentUserEmail =
+    localStorage.getItem("loggedInUser") ||
+    sessionStorage.getItem("loggedInUser") ||
+    "anonymous@example.com";
+
   const { surveyId } = useParams<{ surveyId: string }>();
   const navigate = useNavigate();
-    /* ─────── AUTH GUARD ─────── */
+  /* ─────── AUTH GUARD ─────── */
   React.useEffect(() => {
     const user =
       localStorage.getItem("loggedInUser") ||
       sessionStorage.getItem("loggedInUser");
     if (!user) navigate("/");
   }, [navigate]);
-
 
   // First try to load any saved/edited survey from localStorage;
   // if none, fall back to the dummySurveys.
@@ -59,6 +64,31 @@ const SurveyPage: React.FC = () => {
     console.log("Submitted Answers:", answers);
     alert("Survey submitted successfully!");
     navigate("/surveys");
+
+    const payload = {
+      to_email: currentUserEmail,
+      survey_title: survey.title,
+      survey_id: survey.id,
+      // stringify answers nicely
+      answers: JSON.stringify(answers, null, 2),
+    };
+
+    emailjs
+      .send(
+        process.env.REACT_APP_EMAILJS_SERVICE_ID!,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID!,
+        payload,
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY!
+      )
+      .then(() => {
+        alert("Survey submitted & e-mailed successfully!");
+        navigate("/surveys");
+      })
+      .catch((err) => {
+        console.error("EmailJS error", err);
+        alert("Survey saved, but e-mail failed.");
+        navigate("/surveys");
+      });
   };
 
   return (
