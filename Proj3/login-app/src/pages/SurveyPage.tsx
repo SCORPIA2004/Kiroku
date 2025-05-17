@@ -65,12 +65,32 @@ const SurveyPage: React.FC = () => {
     alert("Survey submitted successfully!");
     navigate("/surveys");
 
+    // const payload = {
+    //   to_email: currentUserEmail,
+    //   survey_title: survey.title,
+    //   survey_id: survey.id,
+    //   // stringify answers nicely
+    //   answers: JSON.stringify(answers, null, 2),
+    // };
+
+    // build lines of "Prompt: Answer"
+    const lines = survey.questions
+      .filter((q) => isVisible(q))
+      .map((q) => {
+        const ans = answers[q.id];
+        // for arrays (checkbox), join with comma
+        const display = Array.isArray(ans)
+          ? ans.join(", ")
+          : ans ?? "(no answer)";
+        return `${q.prompt}: ${display}`;
+      });
+
     const payload = {
       to_email: currentUserEmail,
       survey_title: survey.title,
       survey_id: survey.id,
-      // stringify answers nicely
-      answers: JSON.stringify(answers, null, 2),
+      submitted_at: new Date().toLocaleString(),
+      answers: lines.join("\n"),
     };
 
     emailjs
